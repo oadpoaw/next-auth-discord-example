@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   if (session) {
     return (
       <>
-        Signed in as {session.accessToken} <br />
+        Signed in as {session.user.username}#{session.user.discriminator} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>
     );
