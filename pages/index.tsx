@@ -1,5 +1,6 @@
-import type { NextPage } from "next";
-import { useSession, signIn, signOut } from "next-auth/react";
+import type { GetServerSideProps, NextPage } from "next";
+import { useSession, signIn, signOut, getSession } from "next-auth/react";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -7,16 +8,27 @@ const Home: NextPage = () => {
     return (
       <>
         Signed in as {session.user.username}#{session.user.discriminator} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={() => signOut()}>Sign out</button> <br />
+        <Link href="/protected-clientside">Protected Client Side</Link>
+        <br />
+        <Link href="/protected-serverside">Protected Server Side</Link>
       </>
     );
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => signIn("discord")}>Sign in</button>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      session: await getSession(context),
+    },
+  };
 };
 
 export default Home;
