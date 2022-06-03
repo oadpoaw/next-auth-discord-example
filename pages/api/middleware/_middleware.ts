@@ -2,6 +2,6 @@ import withAuth from "next-auth/middleware";
 
 export default withAuth({
   callbacks: {
-    authorized: ({ token }) => token?.profile.username === "undefine",
+    authorized: ({ token }) => token?.username === "undefine",
   },
 });

@@ -7,11 +7,15 @@ const Home: NextPage = () => {
   if (session) {
     return (
       <>
-        Signed in as {session.user.username}#{session.user.discriminator} <br />
+        Signed in as {session.user?.name} <br />
         <button onClick={() => signOut()}>Sign out</button> <br />
         <Link href="/protected-clientside">Protected Client Side</Link>
         <br />
         <Link href="/protected-serverside">Protected Server Side</Link>
+        <br />
+        <pre>
+          <code>{JSON.stringify(session, null, 2)}</code>
+        </pre>
       </>
     );
   }
